@@ -8,6 +8,7 @@
     <title>ToDo List</title>
 
     <!-- EXTERNAL LIBRARIES -->
+    <link rel="stylesheet" href="ToDoList.css" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"
@@ -17,71 +18,6 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
     <!-- // EXTERNAL LIBRARIES // -->
-    <style>
-        @media all and (min-width:800px) {
-            body {
-                direction: rtl;
-                background-color: #DAF7A6;
-                font-family: 'Tajawal', sans-serif;
-            }
-
-            #tasksTable {
-                width: 60%;
-                background-color: rgb(240, 240, 240);
-                margin-top: 120px;
-
-            }
-
-            #bar1 {
-                width: 100%;
-                background-color: #FFC300;
-                text-align: center;
-                padding-top: 8px;
-                padding-bottom: 8px;
-            }
-
-            #titleTable {
-                display: inline;
-                width: 100%;
-                font-size: 21pt;
-                /* font-family: 'Courier New', Courier, monospace; */
-                margin: 0 0 0 8px;
-            }
-
-            #addTask {
-                border: none;
-                float: right;
-                margin: 2px 10px 0 0;
-                padding-top: 2px;
-                font-size: 20pt;
-                color: #FFC300;
-                box-shadow: 0px 3px 5px rgba(168, 168, 168, 0.38);
-            }
-
-            button.circular {
-                border-radius: 50%;
-                width: 35px;
-                height: 35px;
-                line-height: 0;
-            }
-
-            .task {
-                display: flex;
-                background-color: white;
-                padding: 4px;
-                border-bottom: 1px solid black;
-                transition: box-shadow 0.2s;
-            }
-
-            .done {
-                background-color: rgb(158, 253, 160);
-            }
-
-            .task:hover {
-                box-shadow: 0px 3px 15px rgba(97, 97, 97, 0.843);
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -156,138 +92,6 @@
 
 
 </body>
-
-<script>
-    let tableShow = document.getElementById("tasks")
-    let nowDate = new Date()
-    let tasksArr = []
-    getTaskFromSorage()
-
-    function taskAdd() {
-        let date = new Date()
-        let task = {
-            taskTitle: prompt("الرجاء إدخال المهمة: "),
-            taskDate: nowDate.getFullYear() + "/" + (nowDate.getMonth() + 1) + "/" + nowDate.getDate(),
-            isDone: false
-        }
-        if (task.taskTitle != null) {
-            tasksArr.push(task)
-        }
-        storeTasks()
-        taskPrint()
-    }
-
-    function taskDelete(index) {
-        let isDelete = confirm("هل انت متأكد من حذف مهمة: " + tasksArr[index].taskTitle + "؟")
-        if (isDelete) {
-            tasksArr.splice(index, 1)
-            storeTasks()
-            taskPrint()
-        }
-    }
-
-    function toggleTaskCompletion(index) {
-        let task = tasksArr[index]
-        task.isDone = !task.isDone
-        storeTasks()
-        taskPrint()
-    }
-
-    function tsakEdit(index) {
-        let task = tasksArr[index]
-        let newTaskTitle = prompt("الرجاء إدخال المهمة الجديدة: ", task.taskTitle)
-        if (newTaskTitle != null) {
-            task.taskTitle = newTaskTitle
-        }else{
-            task.taskTitle = task.taskTitle
-        }
-        storeTasks()
-        taskPrint()
-    }
-
-    function taskPrint() {
-        tableShow.innerHTML = ""
-        for (let i = 0; i < tasksArr.length; i++) {
-            let content =
-                ` 
-                <!-- TASKS -->
-                <div class="bar2" style="padding: 20px;" id="tasks">
-                    <!-- TASK -->
-                    <div class="task ${tasksArr[i].isDone ? 'done' : ''}">
-
-                        <!-- TASK INFO -->
-                        <div style="width: 70%;">
-                            <h2>${tasksArr[i].taskTitle}</h2>
-
-                            <!-- DATE -->
-                            <div>
-                                <span class="material-symbols-outlined">
-                                    calendar_month
-                                </span>
-
-                                <span> ${tasksArr[i].taskDate} </span>
-                            </div>
-                            <!-- // DATE // -->
-
-                        </div>
-                        <!-- // TASK INFO // -->
-
-                        <!-- TASK ACTIONS -->
-                        <div style="width: 20%; display: flex; align-items: center; justify-content: space-between; float: left;">
-                            <button class="circular" onclick="taskDelete(${i})" style="background-color: rgb(114,0,0); border: none; color: white;">
-                                <span class="material-symbols-outlined">
-                                    delete
-                                </span>
-                            </button>
-
-                            ${tasksArr[i].isDone ?
-                    `<button id="doneBtn" class="circular" onclick="toggleTaskCompletion(${i})" style="background-color: #FFC300; border: none; color: white;">
-                                             <span class="material-symbols-outlined">
-                                                  cancel
-                                              </span> 
-                                        </button>` :
-                    `<button id="doneBtn" class="circular" onclick="toggleTaskCompletion(${i})" style="background-color: rgb(0,150,30); border: none; color: white;">
-                                            <span class="material-symbols-outlined">
-                                                done
-                                            </span> 
-                                         </button>`}
-                            
-
-                            <button class="circular" onclick="tsakEdit(${i})" style="background-color: rgb(0,16,197,0.692); border: none; color: white;">
-                                <span class="material-symbols-outlined">
-                                    edit
-                                </span> 
-                            </button>
-                        </div>
-                        <!-- // TASK ACTIONS // -->
-                    </div>
-                    <!-- // TASK // -->
-                </div>
-                <!-- // TASKS // -->
-            `
-            tableShow.innerHTML += content
-        }
-    }
-    taskPrint()
-
-    // <------- STORAGE FUNCTION ----------->
-    function storeTasks() {
-        let tasksString = JSON.stringify(tasksArr)
-        localStorage.setItem("tasks", tasksString)
-    }
-    
-    tasksArr = JSON.parse(localStorage.getItem("tasks"))
-    function getTaskFromSorage() {
-        let retrievedTasks = JSON.parse(localStorage.getItem("tasks"))
-        tasksArr = retrievedTasks ?? []
-
-        // if(retrievedTasks == null){
-        //     tasksArr = []
-        // }else{
-        //     tasksArr = retrievedTasks
-        // }
-    }
-
-</script>
+<script src="ToDoList.js"></script>
 
 </html>

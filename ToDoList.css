@@ -1,0 +1,63 @@
+@media all and (min-width:800px) {
+    body {
+        direction: rtl;
+        background-color: #DAF7A6;
+        font-family: 'Tajawal', sans-serif;
+    }
+
+    #tasksTable {
+        width: 60%;
+        background-color: rgb(240, 240, 240);
+        margin-top: 120px;
+
+    }
+
+    #bar1 {
+        width: 100%;
+        background-color: #FFC300;
+        text-align: center;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    #titleTable {
+        display: inline;
+        width: 100%;
+        font-size: 21pt;
+        /* font-family: 'Courier New', Courier, monospace; */
+        margin: 0 0 0 8px;
+    }
+
+    #addTask {
+        border: none;
+        float: right;
+        margin: 2px 10px 0 0;
+        padding-top: 2px;
+        font-size: 20pt;
+        color: #FFC300;
+        box-shadow: 0px 3px 5px rgba(168, 168, 168, 0.38);
+    }
+
+    button.circular {
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        line-height: 0;
+    }
+
+    .task {
+        display: flex;
+        background-color: white;
+        padding: 4px;
+        border-bottom: 1px solid black;
+        transition: box-shadow 0.2s;
+    }
+
+    .done {
+        background-color: rgb(158, 253, 160);
+    }
+
+    .task:hover {
+        box-shadow: 0px 3px 15px rgba(97, 97, 97, 0.843);
+    }
+}
